@@ -59,9 +59,9 @@ This is not an official OpenAI product. This is a personal project and is not af
 curl -LO https://raw.githubusercontent.com/sudoskys/Openaibot/main/setup.sh && sh setup.sh
 ```
 
-`cd Openaibot`
-
 ## 配置
+
+` cd OpenAI/ `
 
 ### 配置 Redis
 
@@ -79,11 +79,11 @@ docker run --name redis -d -v $(pwd)/redis:/data -p 6379:6379 redis redis-server
 
 ### 配置依赖
 
-```bash
-pip install -r requirements.txt
-```
+如果使用了初始化脚本则跳过此步
 
-`pip install -r requirements.txt -i https://pypi.tuna.tsinghua.edu.cn/simple`
+` pip install -r requirements.txt `
+
+国内可使用  `pip install -r requirements.txt -i https://pypi.tuna.tsinghua.edu.cn/simple` 以加快速度
 
 ### 过滤器
 
@@ -95,10 +95,9 @@ Data/Danger.form 一行一个黑名单词汇。至少要有一个。
 
 ### 配置 Config/app.toml
 
-`cp app_exp.toml app.toml`
+` cp app_exp.toml app.toml `
 
-`vim app.toml`
-`nano app.toml`
+` vim app.toml ` 或 ` nano app.toml `
 
 **配置文件**
 
@@ -107,10 +106,10 @@ Data/Danger.form 一行一个黑名单词汇。至少要有一个。
 master = [100, 200] # master user id &owner
 botToken = 'key'
 INTRO = "POWER BY OPENAI"  # 后缀
-ABOUT = "Created by github.com/sudoskys/Openaibot"
+ABOUT = "Created by github.com/sudoskys/Openaibot" # /about 提示的信息
 WHITE = "Group NOT in WHITE list"
 
-[proxy]
+[proxy]  # 代理设置
 status = false
 url = "http://127.0.0.1:7890"
 ```
@@ -119,11 +118,11 @@ url = "http://127.0.0.1:7890"
 
 **配置 key**
 
-```markdown
-see_api_key - 现在几个 Api key
-del_api_key - 删除 Api key
-add_api_key - 增加 Api key
-```
+`see_api_key` - 查看 Api key
+
+`del_api_key` - 删除 Api key
+
+`add_api_key` - 增加 Api key
 
 [OPENAI_API_KEY 申请](https://beta.openai.com/account/api-keys)，支持多 key 分发负载
 [定价参考](https://openai.com/api/pricing/)
