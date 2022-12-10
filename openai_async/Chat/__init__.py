@@ -339,7 +339,7 @@ class Chatbot(object):
         _pre_chat = []
         for i in range(len(_chat)):
             _item = _chat[i]
-            if Talk.tokenizer(_item) > 200:
+            if Talk.tokenizer(_item) > 240:
                 if Talk.get_language(_item) == "chinese":
                     _sum = Talk.tfidf_summarization(sentence=_item, ratio=0.3)
                     if len(_sum) > 7:
@@ -350,10 +350,13 @@ class Chatbot(object):
                         _pre_chat.append(_cut[0])
                         _pre_chat.append(_cut[1])
                         _pre_chat.append(_cut[2])
+                    elif len(_cut) < 1:
+                        _pre_chat.append(_item)
                     else:
                         _pre_chat.extend(_cut)
             else:
                 _pre_chat.append(_item)
+
         # 累计有效Token，从下向上加入
         _now_token = 0
         _useful = []
@@ -361,13 +364,16 @@ class Chatbot(object):
         for i in reversed(range(len(_pre_chat))):
             _item = _pre_chat[i]
             _key = Talk.tfidf_keywords(prompt)
+            add = False
             for ir in _key:
                 if ir in _item:
-                    _useful.append(_item)
-                    _now_token = _now_token + Talk.tokenizer(_item)
-                    if _now_token > _create_token:
-                        __useful_down = True
-                        break
+                    add = True
+            if add:
+                _useful.append(_item)
+                _now_token = _now_token + Talk.tokenizer(_item)
+                if _now_token > _create_token:
+                    __useful_down = True
+                    break
         # 竟然没凑齐
         _not_useful = []
         if not __useful_down:
