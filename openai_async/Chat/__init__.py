@@ -395,7 +395,8 @@ class Chatbot(object):
         _Final.extend(_High)
         return _Final
 
-        async def get_chat_response(self, prompt: str, max_tokens: int = 150, model: str = "text-davinci-003") -> dict:
+    async def get_chat_response(self, prompt: str, max_tokens: int = 150, model: str = "text-davinci-003",
+                                character: list = None, head: str = None, role: str = None) -> dict:
         """
         异步的，得到对话上下文
         :param max_tokens: 限制返回字符数量
