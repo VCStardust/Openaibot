@@ -257,32 +257,21 @@ class Chatbot(object):
         _new_list.extend(reversed(_after_list))
         return _new_list
 
-    async def get_chat_response(self, prompt: str, max_tokens: int = 150, model: str = "text-davinci-003",
-                                character: list = None, head: str = None) -> dict:
+    async def get_chat_response(self, prompt: str, max_tokens: int = 150, model: str = "text-davinci-003") -> dict:
         """
         异步的，得到对话上下文
-        :param head: 预设技巧
         :param max_tokens: 限制返回字符数量
         :param model: 模型选择
         :param prompt: 提示词
-        :param character: 性格提示词，列表字符串
         :return:
         """
-        # 预设
-        if head is None:
-            head = f"\nHuman: 你好，让我们开始愉快的谈话！\nAI: 我是 AI assistant ，请问你有什么问题？"
-        if character is None:
-            character = ["helpful", "creative", "clever", "friendly", "lovely", "talkative"]
-        _character = ",".join(character)
         # 初始化
-        _role = f"The following is a conversation with Ai assistant. The assistant is {_character}."
         _old = self._MsgFlow.read()
         # 构造内容
-        _head = [f"{_role}\n{head}\n"]
         _old_list = [f"{x['role']} {x['prompt']}" for x in _old]
         _now = [f"{self._restart_sequence}{prompt}."]
         # 拼接
-        _prompt_table = _head + _old_list + _now
+        _prompt_table = _old_list + _now
         # 截断器
         _prompt_apple = self.cutter(_prompt_table,
                                     extra_token=int(
