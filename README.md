@@ -4,15 +4,9 @@ OpenAI Chat Telegram Bot
 
 [EN_README](https://github.com/sudoskys/Openaibot/blob/main/README.EN.md)
 
-在 Telegram 上使用 OpenAi 写作. Python > 3.7。
+在 Telegram 上使用 OpenAi 交互. Python > 3.7。
 
 本程序利用 `Api` 认证 `Token` 运作，并不是 `chatGPT` 的逆向，chatGPT **功能**的 **Python 实现** 由本机器人自实现。
-
-```
-This is not an official OpenAI product. This is a personal project and is not affiliated with OpenAI in any way. Don't sue me
-```
-
-**不对机器人生成的任何内容负责，内容由OpenAi提供**
 
 *自己实现的 chatGPT ，体验基本一样，就是 Api 要钱*
 
@@ -22,16 +16,20 @@ This is not an official OpenAI product. This is a personal project and is not af
 
 * 聊天(chat) chatGpt 自实现 + NLP增强
 * 续写(write)  独立推测，续写
-* 多用户
+* 设定固定头人设
+* 多主人管理
 * 多Api key 负载，超额弹出。
 * chatGPT api 版本实现，不逆向 preview 的 api
-* 支持私聊无感回复
+* 支持私聊
+* 支持群聊
 * 支持速率限制
+* 支持用量管理
 * 支持白名单系统
 * 支持黑名单系统
 * 支持内容过滤
 * (20221205) 依赖库不支持异步，大量请求会阻塞,替换为自己写的异步库
 * chatGpt 替换为自己写的 chatGpt Openai api Python 实现
+* 动态裁剪上下文
 
 见 https://github.com/sudoskys/Openaibot/issues/1
 
@@ -53,7 +51,7 @@ This is not an official OpenAI product. This is a personal project and is not af
 
 ## 初始化
 
-内存大于 500MB ，因为用到了 NLP 技术上下文。
+服务器内存大于 500MB ，因为用到了 NLP 技术支持上下文。
 
 * 拉取/更新程序
 
@@ -108,13 +106,14 @@ Data/Danger.form 一行一个黑名单词汇。至少要有一个。
 
 ```toml
 [bot]
-master = [100, 200] # master user id &owner
-botToken = 'key'
+master = [100, 200] # master user id ,账号 ID
+botToken = 'key' # 机器人密钥
 INTRO = "POWER BY OPENAI"  # 后缀
-ABOUT = "Created by github.com/sudoskys/Openaibot" # /about 提示的信息
-WHITE = "Group NOT in WHITE list"
+ABOUT = "Created by github.com/sudoskys/Openaibot" # 关于命令返回
+WHITE = "Group NOT in WHITE list" # 黑白名单提示
 
-[proxy]  # 代理设置
+# 设置的代理，但是不代理 openai api,只代理 bot
+[proxy]
 status = false
 url = "http://127.0.0.1:7890"
 ```
@@ -250,7 +249,18 @@ close - 关闭机器人
 
 外设的 Prompt 裁剪接口，给其他项目提供支持。
 
+### 声明
+
+```markdown
+1. 此项目不是 Openai 的官方项目。
+2. 不对机器人生成的任何内容负责
+```
+
 ### QuickDev
 
 Quick Dev by MVC 框架 https://github.com/TelechaBot/BaseBot
 
+## 感谢
+
+- 贡献者
+- [文本分析工具库](https://github.com/murray-z/text_analysis_tools)
